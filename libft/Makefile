@@ -1,42 +1,68 @@
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -Iincludes
-EXEC = libft
-SRCS = srcs/ft_atoi.c \
-	   srcs/ft_bzero.c \
-	   srcs/ft_memcpy.c \
-	   srcs/ft_memove.c \
-	   srcs/ft_memset.c \
-	   srcs/ft_strcat.c \
-	   srcs/ft_strcmp.c \
-	   srcs/ft_strcpy.c \
-	   srcs/ft_strdup.c \
-	   srcs/ft_strjoin.c \
-	   srcs/ft_strlen.c \
-	   srcs/ft_strncat.c \
-	   srcs/ft_strncmp.c \
-	   srcs/ft_strncpy.c \
-	   srcs/ft_strtrim.c \
-	   srcs/ft_substr.c \
-	   srcs/ft_isalpha.c \
-	   srcs/ft_isalnum.c \
-	   srcs/ft_isdigit.c \
-	   srcs/ft_isprint.c \
-	   srcs/ft_tolower.c \
-	   srcs/ft_toupper.c
+NAME = libft.a
+SRCS = ft_isalpha.c \
+	   ft_isdigit.c \
+	   ft_isalnum.c \
+	   ft_isascii.c \
+	   ft_isprint.c \
+	   ft_strlen.c \
+	   ft_memset.c \
+	   ft_bzero.c \
+	   ft_memcpy.c \
+	   ft_memmove.c \
+	   ft_strlcpy.c \
+	   ft_strlcat.c \
+	   ft_toupper.c \
+	   ft_tolower.c \
+	   ft_strchr.c \
+	   ft_strrchr.c \
+	   ft_strncmp.c \
+	   ft_memchr.c \
+	   ft_memcmp.c \
+	   ft_strnstr.c \
+	   ft_atoi.c \
+	   ft_calloc.c \
+	   ft_strdup.c \
+	   ft_substr.c \
+	   ft_strjoin.c \
+	   ft_strtrim.c \
+	   ft_split.c \
+	   ft_itoa.c \
+	   ft_strmapi.c \
+	   ft_striteri.c \
+	   ft_putchar_fd.c \
+	   ft_putstr_fd.c \
+	   ft_putendl_fd.c \
+	   ft_putnbr_fd.c \
 
+SRCS_BONUS = ft_lstnew.c \
+			 ft_lstadd_front.c \
+			 ft_lstsize.c \
+			 ft_lstlast.c \
+			 ft_lstadd_back.c \
+			 ft_lstdelone.c \
+			 ft_lstclear.c \
+			 ft_lstiter.c \
+			 ft_lstmap.c
 
-INCLUDE = includes/libft.h
+INCLUDE = libft.h
 
 OBJECTS = $(SRCS:.c=.o)
-all: $(EXEC)
 
-$(EXEC): $(SRCS) $(INCLUDE)
-	$(CC) $(CFLAGS) -o $(EXEC) $(SRCS)
+OBJECTS_BONUS = $(SRCS_BONUS:.c=.o)
 
+all: $(NAME)
+
+$(NAME): $(OBJECTS) $(INCLUDE)
+	ar -rc $@ $(OBJECTS)
+
+bonus: $(OBJECTS_BONUS) 
+	ar -rc $(NAME) $(OBJECTS_BONUS)
 clean:
-	rm -rf $(OBJECTS)
+	rm -rf $(OBJECTS) $(OBJECTS_BONUS)
 
 fclean: clean
-	rm -rf $(EXEC)
+	rm -rf $(NAME)
 
 re: fclean all
