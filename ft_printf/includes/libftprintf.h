@@ -1,20 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putchar_fd.c                                    :+:      :+:    :+:   */
+/*   libftprintf.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: apellier <apellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/04 11:18:26 by apellier          #+#    #+#             */
-/*   Updated: 2023/04/06 14:35:08 by apellier         ###   ########.fr       */
+/*   Created: 2023/04/10 13:40:25 by apellier          #+#    #+#             */
+/*   Updated: 2023/04/11 17:01:58 by apellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#ifndef LIBFTPRINTF_H
+# define LIBFTPRINTF_H
 
-void	ft_putchar_fd(char c, int fd)
-{
-	if (fd == -1)
-		return ;
-	write (fd, &c, 1);
-}
+# include <stdarg.h> 
+# include "libft/libft.h"
+
+int	ft_putnbr_hexa(unsigned long long nbr, int lcase);
+int	ft_printf(const char *input, ...);
+int	ft_putchar(char c);
+int	ft_putnbr(int n);
+int	ft_putstr(char *s);
+
+#endif
