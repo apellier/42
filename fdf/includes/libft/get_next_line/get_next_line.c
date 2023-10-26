@@ -6,7 +6,7 @@
 /*   By: apellier <apellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 13:44:36 by apellier          #+#    #+#             */
-/*   Updated: 2023/10/13 18:26:26 by apellier         ###   ########.fr       */
+/*   Updated: 2023/10/21 12:42:57 by apellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,9 +57,6 @@ int	fill_buffer(int fd, int *bytes_read, char **line, char (*buffer)[])
 	(*buffer)[*bytes_read] = 0;
 	return (1);
 }
-
-macron demission
-allo
 
 char	*get_next_line(int fd)
 {

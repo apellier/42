@@ -6,11 +6,26 @@
 /*   By: apellier <apellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 15:40:48 by apellier          #+#    #+#             */
-/*   Updated: 2023/10/20 18:14:58 by apellier         ###   ########.fr       */
+/*   Updated: 2023/10/26 19:17:42 by apellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
+
+void	init_transform(t_transform *transform)
+{
+	ft_bzero(&transform->x_offset, sizeof(double));
+	ft_bzero(&transform->y_offset, sizeof(double));
+	ft_bzero(&transform->x_rotate, sizeof(double));
+	ft_bzero(&transform->y_rotate, sizeof(double));
+	ft_bzero(&transform->z_rotate, sizeof(double));
+	ft_bzero(&transform->zoom_factor, sizeof(double));
+	ft_bzero(&transform->x_center, sizeof(double));
+	ft_bzero(&transform->y_center, sizeof(double));
+	ft_bzero(&transform->z_center, sizeof(double));
+	ft_bzero(&transform->min_z, sizeof(double));
+	ft_bzero(&transform->max_z, sizeof(double));
+}
 
 t_mapdata	*init_structure(void)
 {
@@ -19,22 +34,20 @@ t_mapdata	*init_structure(void)
 	mapdata = malloc(sizeof(t_mapdata));
 	if (!mapdata)
 		return (NULL);
+	mapdata->transform = malloc(sizeof(t_transform));
+	if (!mapdata->transform)
+		return (NULL);
+	init_transform(mapdata->transform);
+	mapdata->points = NULL;
 	ft_bzero(&mapdata->row, sizeof(int));
 	ft_bzero(&mapdata->column, sizeof(int));
-	ft_bzero(&mapdata->x_offset, sizeof(double));
-	ft_bzero(&mapdata->y_offset, sizeof(double));
-	ft_bzero(&mapdata->x_rotate, sizeof(double));
-	ft_bzero(&mapdata->y_rotate, sizeof(double));
-	ft_bzero(&mapdata->z_rotate, sizeof(double));
-	ft_bzero(&mapdata->zoom_factor, sizeof(double));
-	ft_bzero(&mapdata->x_center, sizeof(double));
-	ft_bzero(&mapdata->y_center, sizeof(double));
-	ft_bzero(&mapdata->z_center, sizeof(double));
-	mapdata->window = create_window(); // free window
-	mapdata->img = create_image (&mapdata->window); // free img
+	ft_bzero(&mapdata->has_color, sizeof(int));
+	mapdata->window = create_window();
+	mapdata->img = create_image (&mapdata->window);
 	return (mapdata);
 }
-static int		ft_isdigit_base(char c, int base)
+
+int	ft_isdigit_base(char c, int base)
 {
 	const char	*digits = "0123456789ABCDEF";
 	int			i;
@@ -48,6 +61,7 @@ static int		ft_isdigit_base(char c, int base)
 	}
 	return (-1);
 }
+
 int	ft_has_prefix(const char *str, int base)
 {
 	size_t	i;
@@ -67,7 +81,7 @@ int	ft_has_prefix(const char *str, int base)
 	return (0);
 }
 
-int				ft_atoi_base(const char *str, int base)
+int	ft_atoi_base(const char *str, int base)
 {
 	unsigned long	result;
 	size_t			i;
@@ -85,7 +99,12 @@ int				ft_atoi_base(const char *str, int base)
 	else if (base == 8)
 		i++;
 	else if (base == 10 && (str[i] == '-' || str[i] == '+'))
-		sign = (str[i++] == '-') ? -1 : 1;
+	{
+		if (str[i++] == '-')
+			sign = -1;
+		else
+			sign = 1;
+	}
 	while (ft_isdigit_base(str[i], base) >= 0)
 		result = result * base + ft_isdigit_base(str[i++], base);
 	return ((int)(result * sign));

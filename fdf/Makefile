@@ -11,6 +11,11 @@ SRC = 	$(DIR)main.c \
 		$(DIR)transform.c \
 		$(DIR)utils.c \
 		$(DIR)draw.c \
+		$(DIR)clear.c \
+		$(DIR)color.c \
+		$(DIR)parsing_checks.c \
+		$(DIR)transform_utils.c \
+		$(DIR)putline_utils.c \
 
 
 INCLUDE =  $(DIR)fdf.h include/libft/libft.h
@@ -23,7 +28,7 @@ all: $(NAME)
 
 $(NAME) : $(OBJECTS)
 	$(DEPENDS)
-	gcc $(CFLAGS) -o $(NAME) $(OBJECTS) -g -fsanitize=address -Lincludes/libft -lft -lmlx -framework OpenGL -framework AppKit
+	gcc $(CFLAGS) -o $(NAME) $(OBJECTS) -g -Lincludes/libft -lft -lmlx -framework OpenGL -framework AppKit
 
 clean:
 	rm -f $(OBJECTS)
